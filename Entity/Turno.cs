@@ -11,7 +11,7 @@ namespace Entity
         public int Id { get; set; }
         public DateTime FechaTurno { get; set; }
         public DateTime FechaAsignacion { get; set; }
-        public int MyProperty { get; set; }
+        public int IdPaciente { get; set; }
         public int IdMedico { get; set; }
         public int IdAdministrativo { get; set; }
     }

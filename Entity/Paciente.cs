@@ -13,5 +13,6 @@ namespace Entity
         public string Telefono { get; set; }
         public string Direccion { get; set; }
         public string Mail { get; set; }
+        public List<Turno> TurnoList { get; set; }
     }
 }
