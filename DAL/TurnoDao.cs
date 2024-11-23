@@ -113,7 +113,6 @@ namespace DAL
                  "ORDER BY t.FECHA_TURNO DESC;";
                 using (SqlCommand sqlCommand = new SqlCommand(query, conection))
                 {
-                    //sqlCommand.Parameters.AddWithValue("@id", clinicaId);
                     using (SqlDataReader reader = sqlCommand.ExecuteReader())
                     {
                         while (reader.Read())
@@ -124,6 +123,35 @@ namespace DAL
                 }
             }
             return turnos;
+        }
+
+        public List<Turno> GetTurnosByMedicoId(int id)
+        {
+            try
+            {
+                List<Turno> turnos = new List<Turno>();
+                using (SqlConnection conection = new SqlConnection(ConnectionUtils.GetConnectionString()))
+                {
+                    conection.Open();
+                    string query = "Select ID_Turno, Fecha_Asignacion, Fecha_Turno, ID_Paciente, ID_Administrativo, ID_Medico FROM TURNO WHERE ID_MEDICO = @ID";
+                    using (SqlCommand sqlCommand = new SqlCommand(query, conection))
+                    {
+                        sqlCommand.Parameters.AddWithValue("@ID", id);
+                        using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                turnos.Add(TurnoMapper.Map(reader));
+                            }
+                        }
+                    }
+                }
+                return turnos;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public List<Turno> GetTurnosByPacienteId(int id)

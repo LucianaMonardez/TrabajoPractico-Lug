@@ -9,6 +9,7 @@ namespace TrabajoPractico_Lug
     {
         private PacienteBusiness pacienteBusiness = new PacienteBusiness();
         private TurnoBusiness _turnoBusiness = new TurnoBusiness();
+        private MedicoBusiness _medicoBusiness = new MedicoBusiness();
         private List<Paciente> borradorPacientes = new List<Paciente>();
         public Form1()
         {
@@ -19,6 +20,10 @@ namespace TrabajoPractico_Lug
         private void Form1_Load(object sender, EventArgs e)
         {
             ActualizarTurnoGrid();
+            //Esto despues hay que sacarlo de aca
+            ActualizarComboBoxMedico();
+
+
         }
 
         #region ABM
@@ -173,7 +178,7 @@ namespace TrabajoPractico_Lug
                 throw new Exception("Debe seleccionar un horario para el turno");
 
 
-            return new Turno(dateTimePickerDia.Value + TimeSpan.Parse(horarioMedicoCombobox.SelectedItem.ToString()),
+            return new Turno(dateTimePickerDia.Value.Date + TimeSpan.Parse(horarioMedicoCombobox.SelectedItem.ToString()),
                 Convert.ToInt32(medicoCombobox.SelectedValue));
         }
 
@@ -188,7 +193,39 @@ namespace TrabajoPractico_Lug
             return pac;
         }
 
+        private void ActualizarComboBoxMedico() 
+        {
+            //ESTO ES PARA PROBAR, BORRAR DESPUES CUANDO SE LLENE EL DROPDOWN MEDICO
+            //TODO agregar logica que busque los medicos por especialidad y clinica
+            List<Medico> medicos = new List<Medico>();
+            medicos.Add(new Medico(3, "Juan perez", 12345678, 333, null, null, 12, 19, 1));
+
+            medicoCombobox.DataSource = medicos;
+            medicoCombobox.DisplayMember = "Nombre"; // Mostrar el nombre del médico
+            medicoCombobox.ValueMember = "Id";
+        }
+
+        private void ActualizarDropDownHoraMedico(object sender, EventArgs e)
+        {
+            if (medicoCombobox.SelectedItem is Medico medicoSeleccionado)
+            {
+                int idMedico = medicoSeleccionado.Id;
+
+                List<TimeSpan> horario = _medicoBusiness.ObtenerHorarioMedico(idMedico);
+                List<string> turnosFormateados = horario.Select(t => t.ToString(@"hh\:mm")).ToList();
+
+                horarioMedicoCombobox.DataSource = turnosFormateados;
+
+            }
+            else
+            {
+                MessageBox.Show("No se seleccionó un médico.");
+            }
+            
+        }
+
         #endregion
+
 
     }
 }

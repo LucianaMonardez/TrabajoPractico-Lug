@@ -72,6 +72,7 @@
             medicosLbl = new Label();
             medicosDataGrid = new DataGridView();
             dateTimePickerDia = new DateTimePicker();
+            aplicarClinicaEspBtn = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridViewPacientes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewTurnos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)medicosDataGrid).BeginInit();
@@ -334,6 +335,7 @@
             medicoCombobox.Name = "medicoCombobox";
             medicoCombobox.Size = new Size(121, 23);
             medicoCombobox.TabIndex = 11;
+            medicoCombobox.SelectedIndexChanged += ActualizarDropDownHoraMedico;
             // 
             // horarioMedicoCombobox
             // 
@@ -444,11 +446,21 @@
             dateTimePickerDia.Size = new Size(121, 23);
             dateTimePickerDia.TabIndex = 30;
             // 
+            // aplicarClinicaEspBtn
+            // 
+            aplicarClinicaEspBtn.Location = new Point(611, 10);
+            aplicarClinicaEspBtn.Name = "aplicarClinicaEspBtn";
+            aplicarClinicaEspBtn.Size = new Size(75, 23);
+            aplicarClinicaEspBtn.TabIndex = 31;
+            aplicarClinicaEspBtn.Text = "Aplicar";
+            aplicarClinicaEspBtn.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1248, 599);
+            Controls.Add(aplicarClinicaEspBtn);
             Controls.Add(dateTimePickerDia);
             Controls.Add(medicosDataGrid);
             Controls.Add(medicosLbl);
@@ -549,5 +561,6 @@
         private Label medicosLbl;
         private DataGridView medicosDataGrid;
         private DateTimePicker dateTimePickerDia;
+        private Button aplicarClinicaEspBtn;
     }
 }
