@@ -20,7 +20,6 @@ namespace TrabajoPractico_Lug
         private void Form1_Load(object sender, EventArgs e)
         {
             ActualizarTurnoGrid();
-            ActualizarComboBoxMedico();
             ActualizarGridPaciente();
 
         }
