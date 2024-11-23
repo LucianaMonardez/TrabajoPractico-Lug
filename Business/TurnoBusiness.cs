@@ -12,8 +12,8 @@ namespace Business
 {
     public class TurnoBusiness
     {
-        public TurnoDao _turnoDao = new TurnoDao();
-        public PacienteDao _pacienteDao = new PacienteDao();
+        private TurnoDao _turnoDao = new TurnoDao();
+        private PacienteDao _pacienteDao = new PacienteDao();
 
         public List<Turno> ObtenerTurnos() 
         {
@@ -56,6 +56,8 @@ namespace Business
                 Paciente paciente = _pacienteDao.GetByDni(Convert.ToInt32(dniPaciente)) ??
                     throw new Exception($"No existe paciente con el dni {dniPaciente} en el sistema");
 
+                ValidarDisponibilidadTurno(turno.IdMedico, turno.FechaTurno);
+
                 turno.IdPaciente = paciente.Id;
 
                 //TODO Ver el set administrativo
@@ -68,6 +70,15 @@ namespace Business
 
                 throw;
             }
+        }
+
+        private void ValidarDisponibilidadTurno(int idMedico, DateTime turno)
+        {
+            List<Turno> turnosMedico = _turnoDao.GetTurnosByMedicoId(idMedico);
+            Turno turnoOcupado = turnosMedico.Where(t => t.FechaTurno == turno).FirstOrDefault();
+            if (turnoOcupado != null)
+                throw new Exception($"El turno seleccionado en el horario {turno.Hour}:{turno.Minute} no se encuentra disponible, por favor seleccione otro turno");
+
         }
 
         public void EliminarTurno(string id) 
