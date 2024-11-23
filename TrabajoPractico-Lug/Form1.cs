@@ -20,6 +20,9 @@ namespace TrabajoPractico_Lug
         private void Form1_Load(object sender, EventArgs e)
         {
             ActualizarTurnoGrid();
+            ActualizarComboBoxMedico();
+            ActualizarGridPaciente();
+
         }
 
         #region ABM
@@ -197,7 +200,7 @@ namespace TrabajoPractico_Lug
             medicos.Add(new Medico(3, "Juan perez", 12345678, 333, null, null, 12, 19, 1));
 
             medicoCombobox.DataSource = medicos;
-            medicoCombobox.DisplayMember = "Nombre"; // Mostrar el nombre del médico
+            medicoCombobox.DisplayMember = "Nombre"; 
             medicoCombobox.ValueMember = "Id";
         }
 
