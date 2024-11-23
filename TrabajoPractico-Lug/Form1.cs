@@ -20,10 +20,6 @@ namespace TrabajoPractico_Lug
         private void Form1_Load(object sender, EventArgs e)
         {
             ActualizarTurnoGrid();
-            //Esto despues hay que sacarlo de aca
-            ActualizarComboBoxMedico();
-
-
         }
 
         #region ABM
