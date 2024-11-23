@@ -59,7 +59,6 @@
             clinicaComboBox = new ComboBox();
             EspecialidadCombobox = new ComboBox();
             medicoCombobox = new ComboBox();
-            diaCombobox = new ComboBox();
             horarioMedicoCombobox = new ComboBox();
             dniTxt = new TextBox();
             dniPacienteLbl = new Label();
@@ -69,9 +68,10 @@
             TurnosLbl = new Label();
             idMedicoEliminacionLbl = new Label();
             textBoxEliminarTurno = new TextBox();
-            button1 = new Button();
+            cancelarTurnoBtn = new Button();
             medicosLbl = new Label();
             medicosDataGrid = new DataGridView();
+            dateTimePickerDia = new DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)dataGridViewPacientes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewTurnos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)medicosDataGrid).BeginInit();
@@ -233,7 +233,7 @@
             // 
             // crearTurnoBtn
             // 
-            crearTurnoBtn.Location = new Point(94, 220);
+            crearTurnoBtn.Location = new Point(94, 231);
             crearTurnoBtn.Name = "crearTurnoBtn";
             crearTurnoBtn.Size = new Size(75, 23);
             crearTurnoBtn.TabIndex = 0;
@@ -335,14 +335,6 @@
             medicoCombobox.Size = new Size(121, 23);
             medicoCombobox.TabIndex = 11;
             // 
-            // diaCombobox
-            // 
-            diaCombobox.FormattingEnabled = true;
-            diaCombobox.Location = new Point(128, 155);
-            diaCombobox.Name = "diaCombobox";
-            diaCombobox.Size = new Size(121, 23);
-            diaCombobox.TabIndex = 12;
-            // 
             // horarioMedicoCombobox
             // 
             horarioMedicoCombobox.FormattingEnabled = true;
@@ -418,14 +410,15 @@
             textBoxEliminarTurno.Size = new Size(46, 23);
             textBoxEliminarTurno.TabIndex = 26;
             // 
-            // button1
+            // cancelarTurnoBtn
             // 
-            button1.Location = new Point(395, 249);
-            button1.Name = "button1";
-            button1.Size = new Size(133, 23);
-            button1.TabIndex = 27;
-            button1.Text = "Cancelar turno";
-            button1.UseVisualStyleBackColor = true;
+            cancelarTurnoBtn.Location = new Point(395, 249);
+            cancelarTurnoBtn.Name = "cancelarTurnoBtn";
+            cancelarTurnoBtn.Size = new Size(133, 23);
+            cancelarTurnoBtn.TabIndex = 27;
+            cancelarTurnoBtn.Text = "Cancelar turno";
+            cancelarTurnoBtn.UseVisualStyleBackColor = true;
+            cancelarTurnoBtn.Click += cancelarTurnoBtn_Click;
             // 
             // medicosLbl
             // 
@@ -444,14 +437,22 @@
             medicosDataGrid.Size = new Size(375, 383);
             medicosDataGrid.TabIndex = 29;
             // 
+            // dateTimePickerDia
+            // 
+            dateTimePickerDia.Location = new Point(128, 159);
+            dateTimePickerDia.Name = "dateTimePickerDia";
+            dateTimePickerDia.Size = new Size(121, 23);
+            dateTimePickerDia.TabIndex = 30;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1248, 599);
+            Controls.Add(dateTimePickerDia);
             Controls.Add(medicosDataGrid);
             Controls.Add(medicosLbl);
-            Controls.Add(button1);
+            Controls.Add(cancelarTurnoBtn);
             Controls.Add(textBoxEliminarTurno);
             Controls.Add(idMedicoEliminacionLbl);
             Controls.Add(TurnosLbl);
@@ -479,7 +480,6 @@
             Controls.Add(textBoxTel);
             Controls.Add(textBoxName);
             Controls.Add(horarioMedicoCombobox);
-            Controls.Add(diaCombobox);
             Controls.Add(medicoCombobox);
             Controls.Add(EspecialidadCombobox);
             Controls.Add(clinicaComboBox);
@@ -536,7 +536,6 @@
         private ComboBox clinicaComboBox;
         private ComboBox EspecialidadCombobox;
         private ComboBox medicoCombobox;
-        private ComboBox diaCombobox;
         private ComboBox horarioMedicoCombobox;
         private TextBox dniTxt;
         private Label dniPacienteLbl;
@@ -546,8 +545,9 @@
         private Label TurnosLbl;
         private Label idMedicoEliminacionLbl;
         private TextBox textBoxEliminarTurno;
-        private Button button1;
+        private Button cancelarTurnoBtn;
         private Label medicosLbl;
         private DataGridView medicosDataGrid;
+        private DateTimePicker dateTimePickerDia;
     }
 }

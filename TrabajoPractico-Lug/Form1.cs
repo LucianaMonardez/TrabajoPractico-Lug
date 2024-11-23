@@ -8,49 +8,52 @@ namespace TrabajoPractico_Lug
     public partial class Form1 : Form
     {
         private PacienteBusiness pacienteBusiness = new PacienteBusiness();
+        private TurnoBusiness _turnoBusiness = new TurnoBusiness();
         private List<Paciente> borradorPacientes = new List<Paciente>();
         public Form1()
         {
             InitializeComponent();
-           
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            CargarComponentes();
+            ActualizarTurnoGrid();
         }
+
+        #region ABM
 
         private void crearTurnoBtn_Click(object sender, EventArgs e)
         {
+            try
+            {
+                Turno turno = ObtenerTurnoForm();
+                _turnoBusiness.CrearTurno(turno, turnoDniTxt.Text);
+                MessageBox.Show("Turno creado exitosamente");
+                ReinciciarTextTurno();
+                ActualizarTurnoGrid();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show($"Ocurrio un error al intentar agendar el turno: {ex.Message}");
+            }
 
         }
 
-       
-
-        private Paciente GetPacienteFromForm()
+        private void cancelarTurnoBtn_Click(object sender, EventArgs e)
         {
-            Paciente pac = new Paciente();
-            pac.Nombre = textBoxName.Text;
-            pac.DNI = Convert.ToInt32(dniTxt.Text);
-            pac.Direccion = textBoxDireccion.Text;
-            pac.Telefono = textBoxTel.Text;
-            pac.Mail = textBoxMail.Text;
-            return pac;
-        }
+            try
+            {
+                _turnoBusiness.EliminarTurno(textBoxEliminarTurno.Text);
+                MessageBox.Show("Turno creado exitosamente");
+            }
+            catch (Exception ex)
+            {
 
-        private void ActualizarGridPaciente()
-        {
-            dataGridViewPacientes.DataSource = null;
-            dataGridViewPacientes.DataSource = pacienteBusiness.GetAll();
+                MessageBox.Show($"Ocurrio un error al intentar agendar el turno: {ex.Message}");
+            }
         }
-        private void ReinciciarTextPacientes()
-        {
-            textBoxDireccion.Text = "";
-            textBoxName.Text = "";
-            textBoxMail.Text = "";
-            textBoxTel.Text = "";
-        }
-
         private void buttonCrearPaciente_Click(object sender, EventArgs e)
         {
             Paciente paciente = GetPacienteFromForm();
@@ -118,12 +121,73 @@ namespace TrabajoPractico_Lug
                 MessageBox.Show(ex.Message);
             }
         }
+        #endregion
 
-        //Utils
-        private void CargarComponentes()
+
+
+
+        #region UTILS
+        private void ValidarDiaDatePickerTurno()
         {
-            string[] dias = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes" };
-            diaCombobox.Items.AddRange(dias);
+            // Verificar si el día seleccionado es sábado o domingo
+            if (dateTimePickerDia.Value.DayOfWeek == DayOfWeek.Saturday || dateTimePickerDia.Value.DayOfWeek == DayOfWeek.Sunday)
+                throw new Exception("No se pueden seleccionar sábados ni domingos.");
         }
+
+        private void ActualizarTurnoGrid()
+        {
+            dataGridViewTurnos.DataSource = null;
+            dataGridViewTurnos.DataSource = _turnoBusiness.ObtenerTurnosDto();
+
+        }
+
+        private void ActualizarGridPaciente()
+        {
+            dataGridViewPacientes.DataSource = null;
+            dataGridViewPacientes.DataSource = pacienteBusiness.GetAll();
+        }
+        private void ReinciciarTextPacientes()
+        {
+            textBoxDireccion.Text = "";
+            textBoxName.Text = "";
+            textBoxMail.Text = "";
+            textBoxTel.Text = "";
+        }
+
+        private void ReinciciarTextTurno()
+        {
+            turnoDniTxt.Clear();
+        }
+
+        private Turno ObtenerTurnoForm()
+        {
+            if (string.IsNullOrEmpty(turnoDniTxt.Text))
+                throw new Exception("El campo dni no puede estar vacio");
+            ValidarDiaDatePickerTurno();
+
+            if (medicoCombobox.SelectedItem == null)
+                throw new Exception("Debe seleccionar un medico para el turno");
+
+            if (horarioMedicoCombobox.SelectedItem == null)
+                throw new Exception("Debe seleccionar un horario para el turno");
+
+
+            return new Turno(dateTimePickerDia.Value + TimeSpan.Parse(horarioMedicoCombobox.SelectedItem.ToString()),
+                Convert.ToInt32(medicoCombobox.SelectedValue));
+        }
+
+        private Paciente GetPacienteFromForm()
+        {
+            Paciente pac = new Paciente();
+            pac.Nombre = textBoxName.Text;
+            pac.DNI = Convert.ToInt32(dniTxt.Text);
+            pac.Direccion = textBoxDireccion.Text;
+            pac.Telefono = textBoxTel.Text;
+            pac.Mail = textBoxMail.Text;
+            return pac;
+        }
+
+        #endregion
+
     }
 }

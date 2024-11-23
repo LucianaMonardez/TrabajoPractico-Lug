@@ -12,6 +12,36 @@ namespace DAL
     public class PacienteDao
     {
         private TurnoDao turnoDao = new TurnoDao();
+
+        public Paciente GetByDni(int dni) 
+        {
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionUtils.GetConnectionString()))
+                {
+                    sqlConnection.Open();
+                    string query = "SELECT * FROM PACIENTE WHERE DNI = @dni";
+
+                    using (SqlCommand command = new SqlCommand(query, sqlConnection))
+                    {
+                        command.Parameters.AddWithValue("@dni", dni);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                return PacienteMapper.Map(reader);
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public void CargarPaciente(Paciente pac)
         {
             try
@@ -54,7 +84,7 @@ namespace DAL
                             while (reader.Read())
                             {
                                 int idPaciente = Convert.ToInt32(reader["ID_Paciente"].ToString());
-                                List<Turno> turnos = turnoDao.GetTurnosById(idPaciente);
+                                List<Turno> turnos = turnoDao.GetTurnosByPacienteId(idPaciente);
                                 Paciente pac = PacienteMapper.Map(reader, turnos);
 
                                 pacientes.Add(pac);
@@ -86,7 +116,7 @@ namespace DAL
                         {
                             while (reader.Read())
                             {
-                                List<Turno> turnos = turnoDao.GetTurnosById(id);
+                                List<Turno> turnos = turnoDao.GetTurnosByPacienteId(id);
                                 Paciente paciente = PacienteMapper.Map(reader, turnos);
 
                                 return paciente;
