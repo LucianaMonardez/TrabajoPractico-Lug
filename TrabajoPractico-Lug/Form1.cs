@@ -46,6 +46,7 @@ namespace TrabajoPractico_Lug
             try
             {
                 _turnoBusiness.EliminarTurno(textBoxEliminarTurno.Text);
+                ActualizarTurnoGrid();
                 MessageBox.Show("Turno creado exitosamente");
             }
             catch (Exception ex)
