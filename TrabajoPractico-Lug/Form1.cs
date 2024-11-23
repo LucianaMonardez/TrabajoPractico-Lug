@@ -12,12 +12,26 @@ namespace TrabajoPractico_Lug
         public Form1()
         {
             InitializeComponent();
+           
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            CargarComponentes();
+        }
+
+        private void crearTurnoBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+       
 
         private Paciente GetPacienteFromForm()
         {
             Paciente pac = new Paciente();
             pac.Nombre = textBoxName.Text;
+            pac.DNI = Convert.ToInt32(dniTxt.Text);
             pac.Direccion = textBoxDireccion.Text;
             pac.Telefono = textBoxTel.Text;
             pac.Mail = textBoxMail.Text;
@@ -103,6 +117,13 @@ namespace TrabajoPractico_Lug
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        //Utils
+        private void CargarComponentes()
+        {
+            string[] dias = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes" };
+            diaCombobox.Items.AddRange(dias);
         }
     }
 }

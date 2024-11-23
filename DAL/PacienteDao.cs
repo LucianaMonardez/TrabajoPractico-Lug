@@ -20,10 +20,11 @@ namespace DAL
                 {
                     conexion.Open();
 
-                    string query = "INSERT INTO PACIENTE(Nombre, Telefono, Direccion, Mail) VALUES(@nom,@tel,@dir,@mail)";
+                    string query = "INSERT INTO PACIENTE(Nombre, DNI, Telefono, Direccion, Mail) VALUES(@nom,@dni,@tel,@dir,@mail)";
                     using (SqlCommand command = new SqlCommand(query, conexion))
                     {
                         command.Parameters.AddWithValue("@nom", pac.Nombre);
+                        command.Parameters.AddWithValue("@dni", pac.DNI);
                         command.Parameters.AddWithValue("@tel", pac.Telefono);
                         command.Parameters.AddWithValue("@dir", pac.Direccion);
                         command.Parameters.AddWithValue("@mail", pac.Mail);

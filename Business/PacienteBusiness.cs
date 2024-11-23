@@ -37,7 +37,7 @@ namespace Business
             {
                 throw new Exception("La dirección debe contener almenos 2 caracteres");
             }
-            if (paciente.Mail.Contains("@"))
+            if (!paciente.Mail.Contains("@"))
             {
                 throw new Exception("El mail debe contener una @");
             }
