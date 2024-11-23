@@ -14,5 +14,21 @@ namespace Entity
         public int IdPaciente { get; set; }
         public int IdMedico { get; set; }
         public int IdAdministrativo { get; set; }
+
+        public Turno(int id, DateTime fechaTurno, DateTime fechaAsignacion, int idPaciente, int idMedico, int idAdministrativo)
+        {
+            Id = id;
+            FechaTurno = fechaTurno;
+            FechaAsignacion = fechaAsignacion;
+            IdPaciente = idPaciente;
+            IdMedico = idMedico;
+            IdAdministrativo = idAdministrativo;
+        }
+
+        public Turno(DateTime fechaTurno, int idMedico)
+        {
+            FechaTurno = fechaTurno;
+            IdMedico = idMedico;
+        }
     }
 }
