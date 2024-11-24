@@ -12,5 +12,13 @@ namespace Entity
         public string Descripcion { get; set; }
         public int IdClinica { get; set; }
         public Clinica Clinica { get; set; }
+
+        public Especialidad(int id, string descripcion, int idClinica, Clinica clinica)
+        {
+            Id = id;
+            Descripcion = descripcion;
+            IdClinica = idClinica;
+            Clinica = clinica;
+        }
     }
 }
