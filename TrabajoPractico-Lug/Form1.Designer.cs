@@ -234,7 +234,7 @@
             // 
             // crearTurnoBtn
             // 
-            crearTurnoBtn.Location = new Point(94, 231);
+            crearTurnoBtn.Location = new Point(94, 258);
             crearTurnoBtn.Name = "crearTurnoBtn";
             crearTurnoBtn.Size = new Size(75, 23);
             crearTurnoBtn.TabIndex = 0;
@@ -263,7 +263,7 @@
             // medicoCreacionLbl
             // 
             medicoCreacionLbl.AutoSize = true;
-            medicoCreacionLbl.Location = new Point(23, 134);
+            medicoCreacionLbl.Location = new Point(23, 161);
             medicoCreacionLbl.Name = "medicoCreacionLbl";
             medicoCreacionLbl.Size = new Size(50, 15);
             medicoCreacionLbl.TabIndex = 3;
@@ -272,7 +272,7 @@
             // diaCreacionLbl
             // 
             diaCreacionLbl.AutoSize = true;
-            diaCreacionLbl.Location = new Point(23, 163);
+            diaCreacionLbl.Location = new Point(23, 190);
             diaCreacionLbl.Name = "diaCreacionLbl";
             diaCreacionLbl.Size = new Size(27, 15);
             diaCreacionLbl.TabIndex = 4;
@@ -281,7 +281,7 @@
             // horarioLbl
             // 
             horarioLbl.AutoSize = true;
-            horarioLbl.Location = new Point(23, 191);
+            horarioLbl.Location = new Point(23, 218);
             horarioLbl.Name = "horarioLbl";
             horarioLbl.Size = new Size(50, 15);
             horarioLbl.TabIndex = 5;
@@ -297,11 +297,11 @@
             // seleccionerEspecialidadLbl
             // 
             seleccionerEspecialidadLbl.AutoSize = true;
-            seleccionerEspecialidadLbl.Location = new Point(316, 18);
+            seleccionerEspecialidadLbl.Location = new Point(25, 132);
             seleccionerEspecialidadLbl.Name = "seleccionerEspecialidadLbl";
-            seleccionerEspecialidadLbl.Size = new Size(138, 15);
+            seleccionerEspecialidadLbl.Size = new Size(81, 15);
             seleccionerEspecialidadLbl.TabIndex = 7;
-            seleccionerEspecialidadLbl.Text = "Seleccionar especialidad:";
+            seleccionerEspecialidadLbl.Text = "Eespecialidad:";
             // 
             // seleccionarClinicaLbl
             // 
@@ -317,21 +317,22 @@
             clinicaComboBox.FormattingEnabled = true;
             clinicaComboBox.Location = new Point(150, 10);
             clinicaComboBox.Name = "clinicaComboBox";
-            clinicaComboBox.Size = new Size(121, 23);
+            clinicaComboBox.Size = new Size(190, 23);
             clinicaComboBox.TabIndex = 9;
             // 
             // EspecialidadCombobox
             // 
             EspecialidadCombobox.FormattingEnabled = true;
-            EspecialidadCombobox.Location = new Point(470, 10);
+            EspecialidadCombobox.Location = new Point(128, 124);
             EspecialidadCombobox.Name = "EspecialidadCombobox";
             EspecialidadCombobox.Size = new Size(121, 23);
             EspecialidadCombobox.TabIndex = 10;
+            EspecialidadCombobox.SelectedIndexChanged += ActualizarComboBoxMedico;
             // 
             // medicoCombobox
             // 
             medicoCombobox.FormattingEnabled = true;
-            medicoCombobox.Location = new Point(128, 126);
+            medicoCombobox.Location = new Point(128, 153);
             medicoCombobox.Name = "medicoCombobox";
             medicoCombobox.Size = new Size(121, 23);
             medicoCombobox.TabIndex = 11;
@@ -340,7 +341,7 @@
             // horarioMedicoCombobox
             // 
             horarioMedicoCombobox.FormattingEnabled = true;
-            horarioMedicoCombobox.Location = new Point(128, 188);
+            horarioMedicoCombobox.Location = new Point(128, 215);
             horarioMedicoCombobox.Name = "horarioMedicoCombobox";
             horarioMedicoCombobox.Size = new Size(121, 23);
             horarioMedicoCombobox.TabIndex = 13;
@@ -441,14 +442,14 @@
             // 
             // dateTimePickerDia
             // 
-            dateTimePickerDia.Location = new Point(128, 159);
+            dateTimePickerDia.Location = new Point(128, 186);
             dateTimePickerDia.Name = "dateTimePickerDia";
             dateTimePickerDia.Size = new Size(121, 23);
             dateTimePickerDia.TabIndex = 30;
             // 
             // aplicarClinicaEspBtn
             // 
-            aplicarClinicaEspBtn.Location = new Point(611, 10);
+            aplicarClinicaEspBtn.Location = new Point(346, 10);
             aplicarClinicaEspBtn.Name = "aplicarClinicaEspBtn";
             aplicarClinicaEspBtn.Size = new Size(75, 23);
             aplicarClinicaEspBtn.TabIndex = 31;

@@ -10,6 +10,8 @@ namespace TrabajoPractico_Lug
         private PacienteBusiness pacienteBusiness = new PacienteBusiness();
         private TurnoBusiness _turnoBusiness = new TurnoBusiness();
         private MedicoBusiness _medicoBusiness = new MedicoBusiness();
+        private EspecialidadBusiness _especialidadBusiness = new EspecialidadBusiness();
+        private ClinicaBusiness _clinicaBusiness = new ClinicaBusiness();
         private List<Paciente> borradorPacientes = new List<Paciente>();
         public Form1()
         {
@@ -21,6 +23,15 @@ namespace TrabajoPractico_Lug
         {
             ActualizarTurnoGrid();
             ActualizarGridPaciente();
+
+            //MOVER A UN METODO PRIVADO
+            clinicaComboBox.DataSource = _clinicaBusiness.ObtenerClinicas();
+            clinicaComboBox.DisplayMember = "Nombre";
+            clinicaComboBox.ValueMember = "Id";
+
+            EspecialidadCombobox.DataSource = _especialidadBusiness.ObtenerEspecialidadesPorClinica(3);
+            EspecialidadCombobox.DisplayMember = "Nombre";
+            EspecialidadCombobox.ValueMember = "Id";
 
         }
 
@@ -191,20 +202,14 @@ namespace TrabajoPractico_Lug
             return pac;
         }
 
-        private void ActualizarComboBoxMedico() 
-        {
-            //ESTO ES PARA PROBAR, BORRAR DESPUES CUANDO SE LLENE EL DROPDOWN MEDICO
-            //TODO agregar logica que busque los medicos por especialidad y clinica
-            List<Medico> medicos = new List<Medico>();
-            medicos.Add(new Medico(3, "Juan perez", 12345678, 333, null, null, 12, 19, 1));
-
-            medicoCombobox.DataSource = medicos;
-            medicoCombobox.DisplayMember = "Nombre"; 
-            medicoCombobox.ValueMember = "Id";
-        }
-
         private void ActualizarDropDownHoraMedico(object sender, EventArgs e)
         {
+            if (medicoCombobox.SelectedItem == null)
+            {
+                horarioMedicoCombobox.DataSource = null;
+                return;
+            }
+
             if (medicoCombobox.SelectedItem is Medico medicoSeleccionado)
             {
                 int idMedico = medicoSeleccionado.Id;
@@ -219,11 +224,42 @@ namespace TrabajoPractico_Lug
             {
                 MessageBox.Show("No se seleccionó un médico.");
             }
-            
+
+        }
+
+        private void ActualizarComboBoxMedico(object sender, EventArgs e)
+        {
+            try
+            {
+                if (EspecialidadCombobox.SelectedItem == null)
+                {
+                    medicoCombobox.DataSource = null;
+                    return;
+                }
+
+                int idEspecialidad = 0;
+                if (EspecialidadCombobox.SelectedItem is Especialidad especialidadSeleccionada)
+                {
+                    idEspecialidad = especialidadSeleccionada.Id;
+                }
+
+                if (idEspecialidad == 0)
+                    MessageBox.Show("Por favor, seleccione una especialidad");
+
+                List<Medico> medicos = _medicoBusiness.ObtenerMedicosEspecialidad(idEspecialidad);
+
+                medicoCombobox.DataSource = medicos;
+                medicoCombobox.DisplayMember = "Nombre";
+                medicoCombobox.ValueMember = "Id";
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
         }
 
         #endregion
-
 
     }
 }
