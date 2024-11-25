@@ -95,7 +95,7 @@ namespace Business
                 turno.IdPaciente = paciente.Id;
 
                 //TODO Ver el set administrativo
-                turno.IdAdministrativo = 1;
+                turno.IdAdministrativo = 3;
 
                 _turnoDao.CreateTurno(turno);
             }

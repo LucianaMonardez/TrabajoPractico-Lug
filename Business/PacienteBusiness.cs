@@ -50,8 +50,14 @@ namespace Business
         {
             try
             {
+                Paciente pacienteExiste = pacienteDao.GetByDni(pac.DNI);
+                if(pacienteExiste != null)
+                {
+                    throw new Exception("Este DNI del paciente ya existe");
+                }
                 using (TransactionScope trx = new TransactionScope())
                 {
+                  
                     ValidarPaciente(pac);
 
                     pacienteDao.CargarPaciente(pac);

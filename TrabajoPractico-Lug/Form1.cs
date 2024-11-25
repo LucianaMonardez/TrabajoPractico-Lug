@@ -109,6 +109,7 @@ namespace TrabajoPractico_Lug
             }
             catch (Exception ex)
             {
+                borradorPacientes = new List<Paciente>();
                 MessageBox.Show(ex.Message);
             }
         }
