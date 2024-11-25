@@ -29,16 +29,22 @@ namespace Business
             }
         }
 
-        public void EliminarTurnoPorPaciente(int idPac)
+        public void EliminarTurnoPorPaciente(string idPac)
         {
             try
             {
-                Paciente pac = _pacienteDao.GetById(idPac);
+               
+                if (String.IsNullOrEmpty(idPac))
+                    throw new Exception("Debe insertar un valor en el campo id a eliminar.");
 
+                if (!int.TryParse(idPac, out int idNumerico))
+                    throw new Exception("El campo id debe ser numérico.");
+
+                Paciente pac = _pacienteDao.GetById(Convert.ToInt32(idPac));
                 using (TransactionScope trx = new TransactionScope())
                 {
                     if (pac == null) throw new Exception("Paciente inexistente");
-                    _turnoDao.DeleteTurnosPaciente(idPac);
+                    _turnoDao.DeleteTurnosPaciente(Convert.ToInt32(idPac));
                     trx.Complete();
                 }
 

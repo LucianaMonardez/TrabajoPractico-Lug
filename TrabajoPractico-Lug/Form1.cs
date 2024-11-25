@@ -132,7 +132,7 @@ namespace TrabajoPractico_Lug
         {
             try
             {
-                _turnoBusiness.EliminarTurnoPorPaciente(Convert.ToInt32(textBoxEliminarPaciente.Text));
+                _turnoBusiness.EliminarTurnoPorPaciente(textBoxEliminarPaciente.Text);
                 pacienteBusiness.DeleteById(Convert.ToInt32(textBoxEliminarPaciente.Text));
                 ActualizarGridPaciente();
                 ActualizarTurnoGrid(null);
