@@ -12,6 +12,10 @@ namespace Business
     {
         private MedicoDao _medicoDao = new MedicoDao();
 
+        public List<Medico> GetAllMedicos()
+        {
+            return _medicoDao.Medicos;
+        }
         public List<Medico> ObtenerMedicosEspecialidad(int especialidadId) 
         {
             List<Medico> medicos = _medicoDao.Medicos.Where(medico => medico.IdEspecialidad == especialidadId).ToList();

@@ -11,16 +11,8 @@ namespace Entity
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Direccion { get; set; }
-        public int Telefono { get; set; }
+        public string Telefono { get; set; }
         public string Mail { get; set; }
 
-        public Clinica(int id, string nombre, string direccion, int telefono, string mail)
-        {
-            Id = id;
-            Nombre = nombre;
-            Direccion = direccion;
-            Telefono = telefono;
-            Mail = mail;
-        }
     }
 }
