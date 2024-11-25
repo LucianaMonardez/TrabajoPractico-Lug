@@ -13,10 +13,21 @@ namespace TrabajoPractico_Lug
         private EspecialidadBusiness _especialidadBusiness = new EspecialidadBusiness();
         private ClinicaBusiness _clinicaBusiness = new ClinicaBusiness();
         private List<Paciente> borradorPacientes = new List<Paciente>();
+        private List<Clinica> listaClinicas = new List<Clinica>();
         public Form1()
         {
             InitializeComponent();
 
+        }
+
+        private void PreCargarClases()
+        {
+            EspecialidadCombobox.ValueMember = "Id";
+            EspecialidadCombobox.DisplayMember = "Descripcion";
+            EspecialidadCombobox.DataSource = _especialidadBusiness.ObtenerEspecialidadesPorClinica(1);
+            medicoCombobox.ValueMember = "Id";
+            medicoCombobox.DisplayMember = "Nombre";
+            medicoCombobox.DataSource = _medicoBusiness.ObtenerMedicosEspecialidad(1);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -24,6 +35,7 @@ namespace TrabajoPractico_Lug
             ActualizarTurnoGrid(null);
             ActualizarGridPaciente();
             ObtenerClinicaCombobox();
+            PreCargarClases();
         }
 
         #region ABM
@@ -298,7 +310,18 @@ namespace TrabajoPractico_Lug
 
             return id;
         }
+        private void CargarMedicosCombobox()
+        {
+            medicoCombobox.DataSource = null;
+            List<Medico> medicos = _medicoBusiness.ObtenerMedicosEspecialidad(Convert.ToInt32(EspecialidadCombobox.SelectedValue));
 
+            if (medicos.Count == 0)
+                throw new Exception("No se encontraron Medicos con la especialidad seleccionada");
+        
+            medicoCombobox.DataSource = medicos;
+            medicoCombobox.DisplayMember = "Nombre";
+            medicoCombobox.ValueMember = "Id";
+        }
         private void CargarEspecialidadCombobox() 
         {
             int id = ObtenerIdClinica();
@@ -312,6 +335,7 @@ namespace TrabajoPractico_Lug
             EspecialidadCombobox.DataSource = especialidades;
             EspecialidadCombobox.DisplayMember = "Descripcion";
             EspecialidadCombobox.ValueMember = "Id";
+            CargarMedicosCombobox();
         }
 
         private int ObtenerIdClinica() 
