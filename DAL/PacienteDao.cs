@@ -76,7 +76,7 @@ namespace DAL
                 using (SqlConnection conexion = new SqlConnection(ConnectionUtils.GetConnectionString()))
                 {
                     conexion.Open();
-                    string query = "SELECT ID_Paciente, Nombre, Telefono, Direccion, Mail FROM PACIENTE";
+                    string query = "SELECT ID_Paciente, DNI, Nombre, Telefono, Direccion, Mail FROM PACIENTE";
                     using (SqlCommand command = new SqlCommand(query, conexion))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -107,7 +107,7 @@ namespace DAL
                 using (SqlConnection conexion = new SqlConnection(ConnectionUtils.GetConnectionString()))
                 {
                     conexion.Open();
-                    string query = "SELECT ID_Paciente, Nombre, Telefono, Direccion, Mail PACIENTE WHERE ID_Paciente = @ID";
+                    string query = "SELECT ID_Paciente, DNI, Nombre, Telefono, Direccion, Mail FROM PACIENTE WHERE ID_Paciente = @ID";
                     using (SqlCommand command = new SqlCommand(query, conexion))
                     {
                         command.Parameters.AddWithValue("@ID", id);
@@ -140,10 +140,11 @@ namespace DAL
                 {
                     conexion.Open();
 
-                    string query = "UPDATE PACIENTE SET Nombre = @nombre, Telefono = @tel, Direccion = @dir, Mail = @mail WHERE ID_Paciente = @id";
+                    string query = "UPDATE PACIENTE SET Nombre = @nombre, DNI = @dni, Telefono = @tel, Direccion = @dir, Mail = @mail WHERE ID_Paciente = @id";
                     using (SqlCommand command = new SqlCommand(query, conexion))
                     {
                         command.Parameters.AddWithValue("@id", paciente.Id);
+                        command.Parameters.AddWithValue("@dni", paciente.DNI);
                         command.Parameters.AddWithValue("@nombre", paciente.Nombre);
                         command.Parameters.AddWithValue("@tel", paciente.Telefono);
                         command.Parameters.AddWithValue("@dir", paciente.Direccion);
