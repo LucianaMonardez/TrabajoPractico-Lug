@@ -32,7 +32,20 @@ namespace Business
         {
             try
             {
-                return _turnoDao.GetAllTurnosDto();
+                return _turnoDao.GetAllTurnosDto(null);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<TurnoDto> ObtenerTurnosDtoPorClinica(int clinicaId) 
+        {
+            try
+            {
+                return _turnoDao.GetAllTurnosDto(clinicaId);
             }
             catch (Exception)
             {

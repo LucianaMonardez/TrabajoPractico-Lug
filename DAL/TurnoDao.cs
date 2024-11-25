@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -92,27 +93,30 @@ namespace DAL
             return turnos;
         }
 
-        public List<TurnoDto> GetAllTurnosDto() 
+        public List<TurnoDto> GetAllTurnosDto(int? clinicaId) 
         {
+            string query = "SELECT " +
+            "t.ID_TURNO, t.FECHA_TURNO, p.NOMBRE AS Nombre_Paciente, p.DNI, " +
+            "m.NOMBRE AS Nombre_Medico, esp.Descripcion, c.NOMBRE AS Nombre_Clinica " +
+            "FROM TURNO t " +
+            "INNER JOIN PACIENTE p ON p.ID_PACIENTE = t.ID_PACIENTE " +
+            "INNER JOIN MEDICO m ON m.ID_MEDICO = t.ID_MEDICO " +
+            "INNER JOIN ESPECIALIDAD esp ON esp.ID_ESPECIALIDAD = m.ID_ESPECIALIDAD " +
+            "INNER JOIN CLINICA c ON esp.ID_CLINICA = c.ID_CLINICA ";
+
             List<TurnoDto> turnos = new List<TurnoDto>();
             using (SqlConnection conection = new SqlConnection(ConnectionUtils.GetConnectionString()))
             {
                 conection.Open();
-                string query = "SELECT " +
-                 "t.ID_TURNO ,t.FECHA_TURNO, p.NOMBRE AS Nombre_Paciente, p.DNI, " +
-                 "m.NOMBRE AS Nombre_Medico, esp.Descripcion, c.NOMBRE AS Nombre_Clinica " +
-                 "FROM TURNO t " +
-                 "INNER JOIN PACIENTE p " +
-                 "ON p.ID_PACIENTE = t.ID_PACIENTE " +
-                 "INNER JOIN MEDICO m " +
-                 "ON m.ID_MEDICO = t.ID_MEDICO " +
-                 "INNER JOIN ESPECIALIDAD esp " +
-                 "ON esp.ID_ESPECIALIDAD = m.ID_ESPECIALIDAD " +
-                 "INNER JOIN CLINICA c " +
-                 "ON esp.ID_CLINICA = c.ID_CLINICA " +
-                 "ORDER BY t.FECHA_TURNO DESC;";
+                query = clinicaId == null ? query + "ORDER BY t.FECHA_TURNO DESC;" 
+                    : query + "WHERE c.ID_CLINICA = @id ORDER BY t.FECHA_TURNO DESC;"; 
                 using (SqlCommand sqlCommand = new SqlCommand(query, conection))
                 {
+                    if (clinicaId != null)
+                    {
+                        sqlCommand.Parameters.AddWithValue("@id", clinicaId);
+                    }
+                   
                     using (SqlDataReader reader = sqlCommand.ExecuteReader())
                     {
                         while (reader.Read())

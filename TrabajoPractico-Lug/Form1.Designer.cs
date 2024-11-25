@@ -455,6 +455,7 @@
             aplicarClinicaEspBtn.TabIndex = 31;
             aplicarClinicaEspBtn.Text = "Aplicar";
             aplicarClinicaEspBtn.UseVisualStyleBackColor = true;
+            aplicarClinicaEspBtn.Click += aplicarClinicaEspBtn_Click;
             // 
             // Form1
             // 

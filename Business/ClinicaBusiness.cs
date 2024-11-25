@@ -11,9 +11,10 @@ namespace Business
     {
         public List<Clinica> ObtenerClinicas()
         {
-            //TODO sacar esto y retornar informacion de ClinicaDao, lista en memoria
+            //TODO sacar esto y retornar informacion de ClinicaDao, llenando una lista en memoria
             List<Clinica> clinicasMock = new List<Clinica>();
             clinicasMock.Add(new Clinica(1, "Clinica cardiologica", null, 0, null));
+            clinicasMock.Add(new Clinica(2, "Centro de nefrologia", null, 0, null));
             clinicasMock.Add(new Clinica(3, "Centro de gastroenterologia", null, 0, null));
 
             return clinicasMock;

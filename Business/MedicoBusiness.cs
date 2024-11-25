@@ -16,9 +16,6 @@ namespace Business
         {
             List<Medico> medicos = _medicoDao.Medicos.Where(medico => medico.IdEspecialidad == especialidadId).ToList();
 
-            if (!medicos.Any())
-                throw new Exception("No se encontraron medicos para la especialidad seleccionada");
-
             return medicos;
         }
         public List<TimeSpan> ObtenerHorarioMedico(int id) 
