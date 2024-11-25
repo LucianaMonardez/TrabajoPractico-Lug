@@ -16,13 +16,13 @@ namespace Business
         {
             return _medicoDao.Medicos;
         }
-        public List<Medico> ObtenerMedicosEspecialidad(int especialidadId) 
+        public List<Medico> ObtenerMedicosEspecialidad(int especialidadId)
         {
             List<Medico> medicos = _medicoDao.Medicos.Where(medico => medico.IdEspecialidad == especialidadId).ToList();
 
             return medicos;
         }
-        public List<TimeSpan> ObtenerHorarioMedico(int id) 
+        public List<TimeSpan> ObtenerHorarioMedico(int id)
         {
             Medico medico = _medicoDao.GetById(id) ??
                 throw new Exception("El medico no existe en el sistema");

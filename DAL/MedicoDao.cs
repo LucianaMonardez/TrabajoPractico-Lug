@@ -52,5 +52,34 @@ namespace DAL
         {
             return Medicos.Where(medico => medico.Id == id).FirstOrDefault();
         }
+
+        public Medico GetAllById(int id)
+        {
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionUtils.GetConnectionString()))
+                {
+                    sqlConnection.Open();
+                    string query = "SELECT Nombre, ID_Especialidad, HoraDesde, HoraHasta FROM Medico WHERE ID_Especialidad = @Id";
+
+                    using(SqlCommand cmd = new SqlCommand(query, sqlConnection))
+                    {
+                        cmd.Parameters.AddWithValue("id", id);
+                        using(SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                return MedicoMapper.Map(reader);
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
     }
 }

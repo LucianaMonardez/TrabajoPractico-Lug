@@ -73,6 +73,7 @@
             medicosDataGrid = new DataGridView();
             dateTimePickerDia = new DateTimePicker();
             aplicarClinicaEspBtn = new Button();
+            btnSalir = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridViewPacientes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewTurnos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)medicosDataGrid).BeginInit();
@@ -297,11 +298,11 @@
             // seleccionerEspecialidadLbl
             // 
             seleccionerEspecialidadLbl.AutoSize = true;
-            seleccionerEspecialidadLbl.Location = new Point(25, 132);
+            seleccionerEspecialidadLbl.Location = new Point(24, 132);
             seleccionerEspecialidadLbl.Name = "seleccionerEspecialidadLbl";
-            seleccionerEspecialidadLbl.Size = new Size(81, 15);
+            seleccionerEspecialidadLbl.Size = new Size(75, 15);
             seleccionerEspecialidadLbl.TabIndex = 7;
-            seleccionerEspecialidadLbl.Text = "Eespecialidad:";
+            seleccionerEspecialidadLbl.Text = "Especialidad:";
             // 
             // seleccionarClinicaLbl
             // 
@@ -457,11 +458,22 @@
             aplicarClinicaEspBtn.UseVisualStyleBackColor = true;
             aplicarClinicaEspBtn.Click += aplicarClinicaEspBtn_Click;
             // 
+            // btnSalir
+            // 
+            btnSalir.Location = new Point(1051, 527);
+            btnSalir.Name = "btnSalir";
+            btnSalir.Size = new Size(147, 55);
+            btnSalir.TabIndex = 32;
+            btnSalir.Text = "Salir";
+            btnSalir.UseVisualStyleBackColor = true;
+            btnSalir.Click += btnSalir_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1248, 599);
+            Controls.Add(btnSalir);
             Controls.Add(aplicarClinicaEspBtn);
             Controls.Add(dateTimePickerDia);
             Controls.Add(medicosDataGrid);
@@ -564,5 +576,6 @@
         private DataGridView medicosDataGrid;
         private DateTimePicker dateTimePickerDia;
         private Button aplicarClinicaEspBtn;
+        private Button btnSalir;
     }
 }

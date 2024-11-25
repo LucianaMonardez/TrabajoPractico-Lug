@@ -11,12 +11,12 @@ namespace Business
     public class EspecialidadBusiness
     {
         private EspecialidadDao especialidadDao = new EspecialidadDao();
-        public List<Especialidad> ObtenerEspecialidadesPorClinica(int clincaId) 
+        public List<Especialidad> ObtenerEspecialidadesPorClinica(int clinicaId) 
         {
             try
             {
                 
-                List<Especialidad> especialidad = especialidadDao.Especialidades.Where(especialidad => especialidad.IdClinica == clincaId).ToList();
+                List<Especialidad> especialidad = especialidadDao.Especialidades.Where(especialidad => especialidad.IdClinica == clinicaId).ToList();
                 return especialidad;
             }
             catch (Exception ex) 

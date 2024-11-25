@@ -24,10 +24,10 @@ namespace TrabajoPractico_Lug
         {
             EspecialidadCombobox.ValueMember = "Id";
             EspecialidadCombobox.DisplayMember = "Descripcion";
-            EspecialidadCombobox.DataSource = _especialidadBusiness.ObtenerEspecialidadesPorClinica(1);
+            EspecialidadCombobox.DataSource = _especialidadBusiness.ObtenerEspecialidadesPorClinica(Convert.ToInt32(clinicaComboBox.SelectedValue));
             medicoCombobox.ValueMember = "Id";
             medicoCombobox.DisplayMember = "Nombre";
-            medicoCombobox.DataSource = _medicoBusiness.ObtenerMedicosEspecialidad(1);
+            medicoCombobox.DataSource = _medicoBusiness.ObtenerMedicosEspecialidad(Convert.ToInt32(EspecialidadCombobox.SelectedValue));
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -36,6 +36,7 @@ namespace TrabajoPractico_Lug
             ActualizarGridPaciente();
             ObtenerClinicaCombobox();
             PreCargarClases();
+            ///ActualizarGridMedicos();
         }
 
         #region ABM
@@ -157,7 +158,7 @@ namespace TrabajoPractico_Lug
         private void ActualizarTurnoGrid(int? clinicaId)
         {
             dataGridViewTurnos.DataSource = null;
-            dataGridViewTurnos.DataSource = clinicaId == null ?  _turnoBusiness.ObtenerTurnosDto() : _turnoBusiness.ObtenerTurnosDtoPorClinica((int) clinicaId);
+            dataGridViewTurnos.DataSource = clinicaId == null ? _turnoBusiness.ObtenerTurnosDto() : _turnoBusiness.ObtenerTurnosDtoPorClinica((int)clinicaId);
 
         }
 
@@ -176,6 +177,18 @@ namespace TrabajoPractico_Lug
             dniTxt.Text = "";
         }
 
+        private void ActualizarGridMedicos()
+        {
+            int id = ObtenerIdClinica();
+            medicosDataGrid.DataSource = null;
+
+            List<Medico> medicos = _medicoBusiness.ObtenerMedicosEspecialidad(Convert.ToInt32(EspecialidadCombobox.SelectedValue));
+            if (!medicos.Any())
+                throw new Exception("No se encontraron medicos en la clinica seleccionada");
+
+            medicosDataGrid.DataSource = medicos;
+
+        }
         private void ReinciciarTextTurno()
         {
             turnoDniTxt.Clear();
@@ -201,15 +214,23 @@ namespace TrabajoPractico_Lug
         private Paciente GetPacienteFromForm()
         {
             Paciente pac = new Paciente();
+
             pac.Nombre = textBoxName.Text;
-            pac.DNI = Convert.ToInt32(dniTxt.Text);
+            if (dniTxt.Text != string.Empty)
+            {
+                pac.DNI = Convert.ToInt32(dniTxt.Text);
+            }
+            else
+            {
+                pac.DNI = 0;
+            }
             pac.Direccion = textBoxDireccion.Text;
             pac.Telefono = textBoxTel.Text;
             pac.Mail = textBoxMail.Text;
             return pac;
         }
 
-        private void ObtenerClinicaCombobox() 
+        private void ObtenerClinicaCombobox()
         {
             clinicaComboBox.DataSource = _clinicaBusiness.ObtenerClinicas();
             clinicaComboBox.DisplayMember = "Nombre";
@@ -257,6 +278,7 @@ namespace TrabajoPractico_Lug
                 medicoCombobox.DataSource = medicos;
                 medicoCombobox.DisplayMember = "Nombre";
                 medicoCombobox.ValueMember = "Id";
+                ActualizarGridMedicos();
             }
             catch (Exception ex)
             {
@@ -265,7 +287,7 @@ namespace TrabajoPractico_Lug
             }
         }
 
-        private int ValidarEspecialidadSeleccionada() 
+        private int ValidarEspecialidadSeleccionada()
         {
             if (EspecialidadCombobox.SelectedItem == null)
             {
@@ -293,6 +315,7 @@ namespace TrabajoPractico_Lug
                 int id = ValidarClinicaSeleccionada();
                 ActualizarTurnoGrid(id);
                 CargarEspecialidadCombobox();
+                ActualizarGridMedicos();
             }
             catch (Exception ex)
             {
@@ -320,12 +343,12 @@ namespace TrabajoPractico_Lug
 
             if (medicos.Count == 0)
                 throw new Exception("No se encontraron Medicos con la especialidad seleccionada");
-        
+
             medicoCombobox.DataSource = medicos;
             medicoCombobox.DisplayMember = "Nombre";
             medicoCombobox.ValueMember = "Id";
         }
-        private void CargarEspecialidadCombobox() 
+        private void CargarEspecialidadCombobox()
         {
             int id = ObtenerIdClinica();
             EspecialidadCombobox.DataSource = null;
@@ -341,7 +364,7 @@ namespace TrabajoPractico_Lug
             CargarMedicosCombobox();
         }
 
-        private int ObtenerIdClinica() 
+        private int ObtenerIdClinica()
         {
             int id = 0;
             if (clinicaComboBox.SelectedItem is Clinica clinicaSeleccionada)
@@ -356,5 +379,11 @@ namespace TrabajoPractico_Lug
 
 
 
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+
+                Application.Exit();
+            
+        }
     }
 }
