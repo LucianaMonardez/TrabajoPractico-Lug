@@ -41,6 +41,10 @@ namespace Business
             {
                 throw new Exception("El mail debe contener una @");
             }
+            if(paciente.DNI.ToString().Length < 7 || paciente.DNI.ToString().Length > 8)
+            {
+                throw new Exception("El DNI debe contener 7 u 8 caracteres");
+            }
         }
         public void CargarPaciente(Paciente pac)
         {
@@ -80,7 +84,7 @@ namespace Business
             }
         }
 
-        public void Update(int idPac, string nombre, string tel, string direccion, string mail)
+        public void Update(int idPac, string nombre, string tel, string direccion, string mail, string dni)
         {
             try
             {
@@ -104,6 +108,10 @@ namespace Business
                     if(mail != string.Empty)
                     {
                         pac.Mail = mail;
+                    }
+                    if(dni != string.Empty)
+                    {
+                        pac.DNI = Convert.ToInt32(dni);
                     }
                     
                     ValidarPaciente(pac);

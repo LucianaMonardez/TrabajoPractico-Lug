@@ -64,7 +64,7 @@ namespace TrabajoPractico_Lug
             {
                 _turnoBusiness.EliminarTurno(textBoxEliminarTurno.Text);
                 ActualizarTurnoGrid(null);
-                MessageBox.Show("Turno creado exitosamente");
+                MessageBox.Show("Turno cancelado exitosamente");
             }
             catch (Exception ex)
             {
@@ -116,7 +116,7 @@ namespace TrabajoPractico_Lug
         {
             try
             {
-                pacienteBusiness.Update(Convert.ToInt32(textBoxModPaciente.Text), textBoxName.Text, textBoxTel.Text, textBoxDireccion.Text, textBoxMail.Text);
+                pacienteBusiness.Update(Convert.ToInt32(textBoxModPaciente.Text), textBoxName.Text, textBoxTel.Text, textBoxDireccion.Text, textBoxMail.Text, dniTxt.Text);
                 ActualizarGridPaciente();
                 MessageBox.Show("Paciente modificado correctamente");
             }
@@ -130,8 +130,10 @@ namespace TrabajoPractico_Lug
         {
             try
             {
+                _turnoBusiness.EliminarTurnoPorPaciente(Convert.ToInt32(textBoxEliminarPaciente.Text));
                 pacienteBusiness.DeleteById(Convert.ToInt32(textBoxEliminarPaciente.Text));
                 ActualizarGridPaciente();
+                ActualizarTurnoGrid(null);
                 MessageBox.Show("Paciente eliminado correctamente");
             }
             catch (Exception ex)
@@ -171,6 +173,7 @@ namespace TrabajoPractico_Lug
             textBoxName.Text = "";
             textBoxMail.Text = "";
             textBoxTel.Text = "";
+            dniTxt.Text = "";
         }
 
         private void ReinciciarTextTurno()

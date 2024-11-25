@@ -43,6 +43,29 @@ namespace DAL
             }
         }
 
+        public void DeleteTurnosPaciente(int id)
+        {
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionUtils.GetConnectionString()))
+                {
+                    sqlConnection.Open();
+
+                    string query = "DELETE FROM TURNO WHERE ID_Paciente = @id";
+                    using (SqlCommand sqlCommand = new SqlCommand(query, sqlConnection))
+                    {
+                        sqlCommand.Parameters.AddWithValue("@id", id);
+                        sqlCommand.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
         public Turno GetById(int id) 
         {
             try

@@ -49,7 +49,7 @@ namespace DAL
                 using (SqlConnection conection = new SqlConnection(ConnectionUtils.GetConnectionString()))
                 {
                     conection.Open();
-                    string query = "Select ID_Clinica, Nombre, Direccion, Telefono, Mail WHERE ID_Clinica = @ID";
+                    string query = "Select ID_Clinica, Nombre, Direccion, Telefono, Mail FROM Clinica WHERE ID_Clinica = @ID";
                     using (SqlCommand sqlCommand = new SqlCommand(query, conection))
                     {
                         sqlCommand.Parameters.AddWithValue("@ID", id);

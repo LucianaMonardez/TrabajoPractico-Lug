@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Business
 {
@@ -24,6 +25,26 @@ namespace Business
             catch (Exception)
             {
 
+                throw;
+            }
+        }
+
+        public void EliminarTurnoPorPaciente(int idPac)
+        {
+            try
+            {
+                Paciente pac = _pacienteDao.GetById(idPac);
+
+                using (TransactionScope trx = new TransactionScope())
+                {
+                    if (pac == null) throw new Exception("Paciente inexistente");
+                    _turnoDao.DeleteTurnosPaciente(idPac);
+                    trx.Complete();
+                }
+
+            }
+            catch (Exception ex)
+            {
                 throw;
             }
         }
@@ -60,7 +81,7 @@ namespace Business
                 if (!int.TryParse(dniPaciente, out int idNumerico))
                     throw new Exception("El campo dni debe ser numérico.");
 
-                if (dniPaciente.Length >= 7 && dniPaciente.Length <= 8)
+                if (dniPaciente.Length < 7 && dniPaciente.Length > 8)
                     throw new Exception("La longitud del campo dni debe ser mayor de 6 y menor de 9");
 
                 if (turno.FechaTurno < DateTime.Now.AddDays(2))
@@ -74,7 +95,7 @@ namespace Business
                 turno.IdPaciente = paciente.Id;
 
                 //TODO Ver el set administrativo
-                turno.IdAdministrativo = 1;
+                turno.IdAdministrativo = 3;
 
                 _turnoDao.CreateTurno(turno);
             }
